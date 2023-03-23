@@ -1,5 +1,8 @@
 from flask import Blueprint,request,jsonify
 import joblib
+import tensorflow as tf
+from sklearn.preprocessing import StandardScaler
+
 mlcore = Blueprint("mlcore",__name__,url_prefix="/predict")
 
 @mlcore.get("/diabetese")
@@ -290,6 +293,150 @@ def predictLungCancer():
         return jsonify({"result":result,"prevention methods":prevstrats}),200
     elif res == "NO":
         return jsonify({"result":result}),200
+
+
+@mlcore.get("/thyroid")
+def predict_thyroid():
+    Age	=request.json.get("Age",None)
+    T3=request.json.get("T3",None)
+    TT4=request.json.get("TT4",None)
+    T4U=request.json.get("T4U",None)
+    FTI=request.json.get("FTI",None)
+    gender=request.json.get("gender",None)
+    Sick_t=request.json.get("Sick_t",None)
+    Pregnant_t=request.json.get("Pregnant_t",None)
+    Thyroid_Surgery_t=request.json.get("Thyroid_Surgery_t",None)
+    Goitre_t=request.json.get("Goitre_t",None)
+    Tumor_t=request.json.get("Tumor_t",None)
+
+
+    
+    if  gender is None or Age is None or \
+        Sick_t is None or Pregnant_t is None or Thyroid_Surgery_t is None  or \
+        TT4 is None or T3 is None or \
+        T4U is None or Goitre_t is None or FTI is None or Tumor_t is None:
+        
+        return jsonify({"error":"missing fields","required fields":["gender","age",\
+                                                                         "Sick_t","Pregnant_t","Thyroid_Surgery_t",\
+                                                                         "TT4","T4U","T3","Goitre_t","FTI",\
+                                                                             "Tumor_t"]}),400
+
+    if gender not in ["male","female"]:
+        return jsonify({"error":"gender can only be male or female"}),400 
+
+    if not isinstance(Age,int):
+            return jsonify({"error":"age must be an integer"}),400
+
+        
+    if not isinstance(T3,float):
+            return jsonify({"error":"T3 must be an float"}),400
+
+    if not isinstance(Sick_t,bool):   
+            return jsonify({"error":"sick can be true or false"}),400   
+
+    if not isinstance(Pregnant_t,bool):   
+            return jsonify({"error":"pregnant can be true or false"}),400   
+
+    if not isinstance(Thyroid_Surgery_t,bool):    
+            return jsonify({"error":"thyroid_surgery can be true or false"}),400        
+
+
+    if not isinstance(TT4,float):
+            return jsonify({"error":"TT4 must be an float"}),400
+
+
+    if not isinstance(T4U,float):
+            return jsonify({"error":"T4U must be an float"}),400
+    
+
+    if not isinstance(FTI,float):
+            return jsonify({"error":"FTI must be an float"}),400
+    
+    if not isinstance(Goitre_t,bool):
+            return jsonify({"error":"Goitre can be true or false"}),400
+    
+    if not isinstance(Tumor_t,bool):
+            return jsonify({"error":"Tumor can be true or false"}),400
+
+    
+
+    if gender == 'male':
+        gender = 1
+    else:
+        gender = 0
+
+    if Sick_t:
+            sick = 1
+    else:
+            sick = 0
+
+    if Pregnant_t:
+            pregnant = 1
+    else:
+            pregnant = 0
+
+    if Thyroid_Surgery_t:
+            thyroid_surgery = 1
+    else:
+            thyroid_surgery = 0
+
+    if Goitre_t:
+            Goitre = 1
+    else:
+            Goitre = 0
+
+    if Tumor_t:
+            Tumor = 1
+    else:
+            Tumor = 0
+
+
+
+    model = joblib.load("models/thyroid.joblib")
+    data = [[Age,T3,TT4,T4U,FTI,gender,Sick_t,Pregnant_t,Thyroid_Surgery_t,Goitre_t,Tumor_t]]
+    #return jsonify({"data":data}),200        
+    prediction=model.predict((data))
+    result="no"
+    if prediction[0]==0:
+            result="hyperthyroid"
+            prevention=[]
+            f = open("preventions/thyroid.txt","r")
+            prev = f.readlines()
+            f.close()
+            for line in prev:
+               prevention.append(line.strip('\n'))
+            return jsonify({"result":result,"prevention methods":prevention}),200
+    elif prediction[0]==1:
+            result="hypothyroid"
+            prevention=[]
+            f = open("preventions/thyroid.txt","r")
+            prev = f.readlines()
+            f.close()
+            for line in prev:
+               prevention.append(line.strip('\n'))
+            return jsonify({"result":result,"prevention methods":prevention}),200
+    elif prediction[0]==2 or prediction[0]==3:
+             result="negative"
+             prevention=[]
+             f = open("preventions/thyroid.txt","r")
+             prev = f.readlines()
+             f.close()
+             for line in prev:
+                prevention.append(line.strip('\n'))
+             return jsonify({"result":result,"prevention methods":prevention}),200                      
+    else:
+        return jsonify({"result":result}),200
+
+    
+
+
+
+
+
+
+
+
+        
 
 
     
