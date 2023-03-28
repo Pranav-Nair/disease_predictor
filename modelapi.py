@@ -1,11 +1,10 @@
 from flask import Blueprint,request,jsonify
 import joblib
-import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
 
 mlcore = Blueprint("mlcore",__name__,url_prefix="/predict")
 
-@mlcore.post("/diabetese")
+@mlcore.put("/diabetese")
 def predict_diabetese():
     glucose = request.json.get("glucose",None)
     bp = request.json.get("bp",None)
@@ -57,7 +56,6 @@ def predict_diabetese():
             "prevention methods":prevstrats}),200
     else:
         return jsonify({"result":result,"bmi":bmi,"diabetese pedigree function":dpf,"prevention methods":prevstrats}),200
-
 
 
 @mlcore.get("/heartdisease")
@@ -393,8 +391,7 @@ def predict_thyroid():
 
 
     model = joblib.load("models/thyroid.joblib")
-    data = [[Age,T3,TT4,T4U,FTI,gender,Sick_t,Pregnant_t,Thyroid_Surgery_t,Goitre_t,Tumor_t]]
-    #return jsonify({"data":data}),200        
+    data = [[Age,T3,TT4,T4U,FTI,gender,Sick_t,Pregnant_t,Thyroid_Surgery_t,Goitre_t,Tumor_t]]      
     prediction=model.predict((data))
     result="no"
     if prediction[0]==0:
@@ -426,17 +423,3 @@ def predict_thyroid():
              return jsonify({"result":result,"prevention methods":prevention}),200                      
     else:
         return jsonify({"result":result}),200
-
-    
-
-
-
-
-
-
-
-
-        
-
-
-    

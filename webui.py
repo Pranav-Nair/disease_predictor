@@ -31,7 +31,7 @@ def submit_diabetese_data():
         "sdac":sdac,
         "tdac":tdac
     }
-    resp = requests.post("http://localhost:5000/predict/diabetese",json=data)
+    resp = requests.put("http://localhost:5000/predict/diabetese",json=data)
     if resp.status_code>=400 and resp.status_code<=500:
         det_msg=""
         if resp.status_code == 500:
@@ -51,7 +51,7 @@ def submit_diabetese_data():
     bmi = res['bmi']
     dpf = res['diabetese pedigree function']
     bmi_element = "<tr><th>bmi</th><td>"+str(bmi)+"</td></tr>"
-    dpf_element = "<tr><th>Diabetese Predigree Function</th><td>"+str(dpf)+"</td></tr>"
+    dpf_element = "<tr><th>Diabetese Predegree Function</th><td>"+str(dpf)+"</td></tr>"
     add_info = bmi_element+dpf_element
     prevelements = ''''''
     for prev in preventions:
