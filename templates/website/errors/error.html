@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error</title>
+  <style>
+    body {
+      background-color: #000000b6;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 50%;
+      margin: 0 auto;
+      margin-top: 5%;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 36px;
+      font-weight: bold;
+      color: #f44242;
+      margin-top: 0;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #444;
+      margin-top: 20px;
+    }
+    p {
+      font-size: 18px;
+      color: #666;
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>{{response}}</h1>
+    <h2>{{msg}}</h2>
+    <p>{{det_msg}}</p>
+    <img src="http://localhost:5000/resource/img/error.png" alt="Error Image">
+  </div>
+</body>
+</html>

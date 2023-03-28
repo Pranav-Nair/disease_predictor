@@ -2,7 +2,7 @@ from flask import Blueprint,request,jsonify
 import joblib
 mlcore = Blueprint("mlcore",__name__,url_prefix="/predict")
 
-@mlcore.get("/diabetese")
+@mlcore.post("/diabetese")
 def predict_diabetese():
     glucose = request.json.get("glucose",None)
     bp = request.json.get("bp",None)
@@ -43,17 +43,17 @@ def predict_diabetese():
     res = model.predict(data)
     result = "no"
     prevstrats = []
+    f = open("preventions/diabetese.txt","r")
+    prev = f.readlines()
+    f.close()
+    for line in prev:
+        prevstrats.append(line.strip('\n'))
     if res == 1 :
         result = "yes"
-        f = open("preventions/diabetese.txt","r")
-        prev = f.readlines()
-        f.close()
-        for line in prev:
-            prevstrats.append(line.strip('\n'))
         return jsonify({"result":result,"bmi":bmi,"diabetese pedigree function":dpf,\
             "prevention methods":prevstrats}),200
     else:
-        return jsonify({"result":result,"bmi":bmi,"diabetese pedigree function":dpf}),200
+        return jsonify({"result":result,"bmi":bmi,"diabetese pedigree function":dpf,"prevention methods":prevstrats}),200
 
 
 
