@@ -7,6 +7,10 @@ webapp = Blueprint("webapp",__name__)
 def load_diabetese_page():
     return render_template("website/diabetese.html")
 
+@webapp.route("/thyroid")
+def load_thyroid_page():
+    return render_template("website/thyroid.html")
+
 @webapp.post("/diabetese/submit")
 def submit_diabetese_data():
     glucose = request.form.get("glucose",None,type=int)
@@ -60,4 +64,54 @@ def submit_diabetese_data():
     
     return render_template("website/results/result.html",result=result,title=title,preventions=prevelements,add_info=add_info),200
 
+@webapp.post("/thyroid/submit")
+def submit_thyroid_data():
+    Age = request.form.get("Age",None,type=int)
+    T3 = request.form.get("T3",None,type=float)
+    TT4 = request.form.get("TT4",None,type=float)
+    T4U = request.form.get("T4U",None,type=float)
+    FTI = request.form.get("FTI",None,type=float)
+    gender=request.form.get("gender",None,type=str)
+    Sick_t=request.form.get("Sick_t",None,type=bool)
+    Pregnant_t=request.form.get("Pregnant_t",None,type=bool)
+    Thyroid_Surgery_t=request.form.get("Thyroid_Surgery_t",None,type=bool)
+    Goitre_t=request.form.get("Goitre_t",None,type=bool)
+    Tumor_t=request.form.get("Tumor_t",None,type=bool)
+    data = {
+        "Age":Age,
+        "T3":T3,
+        "TT4":TT4,
+        "T4U":T4U,
+        "FTI":FTI,
+        "gender":gender,
+        "Sick_t":Sick_t,
+        "Pregnant_t":Pregnant_t,
+        "Thyroid_Surgery_t":Thyroid_Surgery_t,
+        "Goitre_t":Goitre_t,
+        "Tumor_t":Tumor_t
+    }
+    
+    resp = requests.put("http://localhost:5000/predict/thyroid",json=data)
+    if resp.status_code>=400 and resp.status_code<=500:
+        det_msg=""
+        if resp.status_code == 500:
+            det_msg="Server down try again later"
+        if resp.status_code == 404:
+            det_msg="Page not found"
+        elif resp.status_code>=400 and resp.status_code<500:
+            det_msg = "Please make sure you filled all fields with correct data"
+        json = resp.json()
+        err = json["error"]
+        err = err.upper()
+        return render_template("website/errors/error.html",response=resp.status_code,msg=err,det_msg=det_msg)
+    res = resp.json()
+    result = res['result']
+    title = "Thyroid Prediction Result"
+    preventions = res['prevention methods']
+    prevelements = ''''''
+    for prev in preventions:
+        item = "<li>" + prev + "</li>"
+        prevelements+=item
+    
+    return render_template("website/results/result.html",result=result,title=title,preventions=prevelements),200
 

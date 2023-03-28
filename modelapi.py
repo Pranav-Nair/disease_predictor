@@ -293,7 +293,7 @@ def predictLungCancer():
         return jsonify({"result":result}),200
 
 
-@mlcore.get("/thyroid")
+@mlcore.put("/thyroid")
 def predict_thyroid():
     Age	=request.json.get("Age",None)
     T3=request.json.get("T3",None)

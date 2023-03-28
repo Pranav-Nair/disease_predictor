@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" id="content">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thyroid Prediction</title>
+  <style>
+      body {
+      font-family: Arial, sans-serif;
+      background-color: rgba(0, 0, 0, 0.774);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    form {
+      max-width: 40%;
+      margin: 0 auto;
+      margin-top: 5%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: #f7f7f7;
+      border-radius: 10px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    td {
+      padding: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #submit {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #submit {
+      background-color: #3e8e41;
+    }
+
+    #error {
+      color: red;
+      font-weight: bold;
+      font-size: large;
+    }
+  </style>
+</head>
+<body>
+  <form action="http://localhost:5000/thyroid/submit" method="post">
+    <table>
+    <h1>Thyroid Prediction</h1>
+      <tr>
+        <td>
+          <label>Age</label>
+        </td>
+        <td>
+          <input type="number" name="Age" id="Age">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>T3</label>
+        </td>
+        <td>
+          <input type="number" name="T3" id="T3" step="0.01">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>TT4</label>
+        </td>
+        <td>
+          <input type="number" name="TT4" id="TT4" step="0.01">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>T4U</label>
+        </td>
+        <td>
+          <input type="number" name="T4U" id="T4U" step="0.01">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>FTI</label>
+        </td>
+        <td>
+          <input type="number" name="FTI" id="FTI" step="0.01">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="gender-select">Gender:</label>
+        </td>
+        <td>
+          <select id="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="sick-select">Sick:</label>
+        </td>
+        <td>
+          <select id="Sick_t" name="Sick_t">
+            <option value="false">False</option>
+            <option value="true">True</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="pregnant-select">pregnant:</label>
+        </td>
+        <td>
+          <select id="Pregnant_t" name="Pregnant_t">
+            <option value="false">False</option>
+            <option value="true">True</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="Thyroid_Surgery">Thyroid_Surgery:</label>
+        </td>
+        <td>
+          <select id="Thyroid_Surgery_t" name="Thyroid_Surgery_t">
+            <option value="false">False</option>
+            <option value="true">True</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="Goitre-select">Goitre:</label>
+        </td>
+        <td>
+          <select id="Goitre_t" name="Goitre_t">
+            <option value="false">False</option>
+            <option value="true">True</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="Tumor-select">Tumor:</label>
+        </td>
+        <td>
+          <select id="Tumor_t" name="Tumor_t">
+            <option value="false">False</option>
+            <option value="true">True</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+      </td>
+      </td>
+      <td>
+        <button id="submit">Predict</button>
+
+      </td>
+      </tr>
+    </table>
+  </form>
+</body>
+</html>
