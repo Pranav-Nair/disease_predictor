@@ -11,6 +11,10 @@ def load_diabetese_page():
 def load_thyroid_page():
     return render_template("website/thyroid.html")
 
+@webapp.route("/heartdisease")
+def load_heart_page():
+    return render_template("website/heartdisease.html")
+
 @webapp.post("/diabetese/submit")
 def submit_diabetese_data():
     glucose = request.form.get("glucose",None,type=int)
@@ -107,6 +111,63 @@ def submit_thyroid_data():
     res = resp.json()
     result = res['result']
     title = "Thyroid Prediction Result"
+    preventions = res['prevention methods']
+    prevelements = ''''''
+    for prev in preventions:
+        item = "<li>" + prev + "</li>"
+        prevelements+=item
+    
+    return render_template("website/results/result.html",result=result,title=title,preventions=prevelements),200
+
+
+@webapp.post("/heartdisease/submit")
+def submit_heart_data():
+    age = request.form.get("age",None,type=int)
+    gender = request.form.get("gender",None,type=str)
+    cp = request.form.get("cp",None,type=int)
+    resrbps = request.form.get("restbps",None,type=float)
+    chol = request.form.get("chol",None,type=float)
+    fbs = request.form.get("fbs",None,type=bool)
+    restecg = request.form.get("restecg",None,type=int)
+    thalach = request.form.get("thalach",None,type=int)
+    exang = request.form.get("exang",None,type=bool)
+    oldpeak = request.form.get("oldpeak",None,type=float)
+    slope = request.form.get("slope",None,type=int)
+    ca = request.form.get("ca",None,type=int)
+    thal = request.form.get("thal",None,type=int)
+
+    data = {
+	"age": age,
+	"gender": gender,
+	"cp":cp,
+	"restbps": resrbps,
+	"chol":chol,
+	"fbs": fbs,
+	"restecg": restecg,
+	"thalach": thalach,
+	"exang": exang,
+	"oldpeak": oldpeak,
+	"slope": slope,
+	"ca": ca,
+	"thal": thal
+    }
+
+    resp = requests.put("http://localhost:5000/predict/heartdisease",json=data)
+    if resp.status_code>=400 and resp.status_code<=500:
+        det_msg=""
+        if resp.status_code == 500:
+            det_msg="Server down try again later"
+        if resp.status_code == 404:
+            det_msg="Page not found"
+        elif resp.status_code>=400 and resp.status_code<500:
+            det_msg = "Please make sure you filled all fields with correct data"
+        json = resp.json()
+        err = json["error"]
+        err = err.upper()
+        return render_template("website/errors/error.html",response=resp.status_code,msg=err,det_msg=det_msg)
+    res = resp.json()
+    result = res['result']
+    title = "Heart Disease Prediction Result"
     preventions = res['prevention methods']
     prevelements = ''''''
     for prev in preventions:

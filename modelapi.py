@@ -58,7 +58,7 @@ def predict_diabetese():
         return jsonify({"result":result,"bmi":bmi,"diabetese pedigree function":dpf,"prevention methods":prevstrats}),200
 
 
-@mlcore.get("/heartdisease")
+@mlcore.put("/heartdisease")
 def predict_heartissue():
     age = request.json.get("age",None)
     gender = request.json.get("gender",None)
@@ -79,9 +79,9 @@ def predict_heartissue():
             "fbs","restecg","thalach","exang","oldpeak","slope","ca","thal"]}),400
     
     if age <=0 or cp <0 or resrbps <=0 or fbs <0 or restecg <0 or thalach <=0 or oldpeak <0 \
-        or slope <0 or ca <0 or thal <=0 or chol <=0: 
-        return jsonify({"error":"invalid values","non zero fields":["age","restbps","thalach","thal","chol"], \
-            "non negative fields":["cp","restecg","oldpeak","slope","ca"]}),400
+        or slope <0 or ca <0 or thal <0 or chol <=0: 
+        return jsonify({"error":"invalid values","non zero fields":["age","restbps","thalach","chol"], \
+            "non negative fields":["cp","restecg","oldpeak","slope","ca","thal"]}),400
     
     if gender not in ["male","fename"]:
         return jsonify({"error":"gener can only be [male,female]"}),400
@@ -94,13 +94,18 @@ def predict_heartissue():
     if not isinstance(exang,bool):
         return jsonify({"error":"exang can be true or false"})
     
+    if not isinstance(fbs, bool):
+        return jsonify({"error":"fbs can be true or false"})
+    
     if exang:
         exang =1
     else:
         exang = 0
 
-    if fbs !=0 and fbs !=1:
-        return jsonify({"error":"fbs can be 0 or 1"}),400
+    if fbs:
+        fbs = 1
+    else:
+        fbs = 0
 
     if restecg > 2:
         return jsonify({"error":"restecg cannot cross 2"}),400
@@ -122,16 +127,14 @@ def predict_heartissue():
     res = model.predict(data)
     result = "no"
     prevstrats = []
+    f = open("preventions/heartissues.txt","r")
+    prev = f.readlines()
+    f.close()
+    for line in prev:
+        prevstrats.append(line.strip('\n'))
     if res == 1:
         result = "yes"
-        f = open("preventions/heartissues.txt","r")
-        prev = f.readlines()
-        f.close()
-        for line in prev:
-            prevstrats.append(line.strip('\n'))
-        return jsonify({"result":result,"prevention methods":prevstrats}),200
-    else:
-        return jsonify({"result":result}),200
+    return jsonify({"result":result,"prevention methods":prevstrats}),200
 
 
 @mlcore.get("/lungcancer")

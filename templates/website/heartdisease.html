@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: rgba(0, 0, 0, 0.774);
+      }
+  
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+      }
+  
+      form {
+        max-width: 40%;
+        margin: 0 auto;
+        margin-top: 5%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-radius: 10px;
+      }
+  
+      table {
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+  
+      td {
+        padding: 10px;
+      }
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+  
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+  
+      #submit {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+  
+      #submit {
+        background-color: #3e8e41;
+      }
+  
+      #error {
+        color: red;
+        font-weight: bold;
+        font-size: large;
+      }
+    </style>
+</head>
+<body>
+    <form action="http://localhost:5000/heartdisease/submit" method="post">
+        <table>
+        <h1>Heart Disease Prediction</h1>
+          <tr>
+            <td>
+              <label>Gender</label>
+            </td>
+            <td>
+              <select name="gender" id="glucose">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Rest Blood Pressure</label>
+            </td>
+            <td>
+              <input type="number" name="restbps" id="restbps" step="0.01">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Chest Pain</label>
+            </td>
+            <td>
+              <select name="cp" id="cp">
+                <option value="0">Asymptomatic</option>
+                <option value="1">Typical angina</option>
+                <option value="2">Atypical angina</option>
+                <option value="3">Non-anginal pain</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Cholestrol</label>
+            </td>
+            <td>
+              <input type="number" name="chol" id="chol" step="0.01">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Fasting Blood Sugar > 120</label>
+            </td>
+            <td>
+              <select name="fbs" id="fbs" step="0.01">
+                <option value="true">True</option>
+                <option value="false">False</option>
+                </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>age</label>
+            </td>
+            <td>
+              <input type="number" name="age" id="age">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Resting Electrocardiographic Results</label>
+            </td>
+            <td>
+              <select name="restecg" id="restecg">
+                <option value="0">Normal </option>
+                <option value="1">ST-T wave abnormality</option>
+                <option value="2">left ventricular hypertrophy by Estes' criteria </option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Max heart rate achieved</label>
+            </td>
+            <td>
+              <input type="number" name="thalach" id="thalach">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Exercise induced Angina</label>
+            </td>
+            <td>
+              <select name="exang" id="exang">
+                <option value="true">True</option>
+                <option value="false">False</option>
+                </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>oldpeak</label>
+            </td>
+            <td>
+              <input type="number" name="oldpeak" id="oldpeak" step="0.01">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Slope of peak exercise</label>
+            </td>
+            <td>
+              <select name="slope" id="slope">
+                <option value="0">Upsloping</option>
+                <option value="1">Flat</option>
+                <option value="2">Downsloping</option>
+                </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Number of blood vessels colored by flourosopy</label>
+            </td>
+            <td>
+              <select name="ca" id="ca">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>thalium</label>
+            </td>
+            <td>
+              <select name="thal" id="thal">
+                <option value="0">Normal</option>
+                <option value="1">Fixed defect</option>
+                <option value="2">Reversible defect</option>
+                </select>
+            </td>
+          </tr>
+          <tr>
+          </td>
+          </td>
+          <td>
+            <button id="submit">Predict</button>
+    
+          </td>
+          </tr>
+        </table>
+      </form>
+    </body>
+    </html>
+</body>
+</html>
