@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Disease Predictor</title>
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: #1c1c1c;
+  color: white;
+  padding: 10px;
+}
+
+main {
+  min-height: 82.5vh;
+  position: relative;
+}
+
+.background-image {
+  background-image: url("http://localhost:5000/resource/img/background.jpg");
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px;
+}
+
+.card {
+  width: 45%;
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #3e8e41;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Disease Predictor</h1>
+    </header>
+    <main>
+      <div class="background-image"></div>
+      <div class="container">
+        <div class="card">
+          <div class="card-content">
+            <h2>Diabetes</h2>
+            <p>Diabetes is a chronic condition that affects the way your body processes blood sugar.</p>
+            <a href="http://localhost:5000/diabetese" class="btn">Predict Now</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h2>Thyroid Issues</h2>
+            <p>Thyroid issues can occur when the thyroid gland produces too much or too little thyroid hormone.</p>
+            <a href="http://localhost:5000/thyroid" class="btn">Predict Now</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h2>Lung Cancer</h2>
+            <p>Lung cancer is a type of cancer that begins in the lungs and can spread to other parts of the body.</p>
+            <a href="http://localhost:5000/lungcancer" class="btn">Predict Now</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h2>Heart Disease</h2>
+            <p>Heart disease is a group of conditions that affect the structure and function of the heart.</p>
+            <a href="http://localhost:5000/heartdisease" class="btn">Predict Now</a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>Project by Rishi Chowdary,Pranav Nair,Pranav Vichur,Raj Abhishek,Sabarinath D</p>
+    </footer>
+  </body>
+</html>

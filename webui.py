@@ -19,6 +19,10 @@ def load_heart_page():
 def load_lung_page():
     return render_template("website/lungcancer.html")
 
+@webapp.route("/")
+def load_home_page():
+    return render_template("website/home.html")
+
 @webapp.post("/diabetese/submit")
 def submit_diabetese_data():
     glucose = request.form.get("glucose",None,type=int)
