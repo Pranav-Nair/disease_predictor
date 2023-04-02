@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lung Cancer | Disease Prediction</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: rgba(0, 0, 0, 0.774);
+      }
+  
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+      }
+  
+      form {
+        max-width: 40%;
+        margin: 0 auto;
+        margin-top: 5%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-radius: 10px;
+      }
+  
+      table {
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+  
+      td {
+        padding: 10px;
+      }
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+  
+      input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+  
+      #submit {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+  
+      #submit {
+        background-color: #3e8e41;
+      }
+  
+      #error {
+        color: red;
+        font-weight: bold;
+        font-size: large;
+      }
+    </style>
+</head>
+<body>
+    <form action="http://localhost:5000/lungcancer/submit" method="post">
+        <table>
+            <h1>Lung Cancer Predicction</h1>
+            <tr>
+                <td>
+                    <label for="gender">Gender:</label>
+                </td>
+                <td>
+                    <select name="gender" id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Age</label>
+                </td>
+                <td>
+                    <input type="'number" name="age">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Do you smoke?</label>
+                </td>
+                <td>
+                    <select name="smoking" id="smoking">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="yellow_fingers">Do your fingers turn yellow from smoking?</label>
+                </td>
+                <td>
+                    <select name="yellow_fingers">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="anxiety">Do you experience anxiety or depression?</label>
+                </td>
+                <td>
+                    <select name="anxiety">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="peer_pressure">Have you ever felt pressure to smoke from friends or peers?</label>
+                </td>
+                <td>
+                    <select name="peer_pressure">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="chronic_disease">Do you have any chronic diseases?</label>
+                </td>
+                <td>
+                    <select name="chronic_disease">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="fatigue">Do you experience fatigue?</label>
+                </td>
+                <td>
+                    <select name="fatigue">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="allergy">Do you have any allergies?</label>
+                </td>
+                <td>
+                    <select name="allergy">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="wheezing">Do you experience wheezing?</label>
+                </td>
+                <td>
+                    <select name="wheezing">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="alcohol">Do you consume alcohol?</label>
+                </td>
+                <td>
+                    <select name="alcohol">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="cough">Do you have a cough?</label>
+                </td>
+                <td>
+                    <select name="cough">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="shortness_of_breath">Do you experience shortness of breath?</label>
+                </td>
+                <td>
+                    <select name="shortness_of_breath">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="swallowing_difficulty">Do you have difficulty swallowing?</label>
+                </td>
+                <td>
+                    <select name="swallowing_difficulty">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="chest_pain">Do you experience chest pain?</label>
+                </td>
+                <td>
+                    <select name="chest_pain">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="submit">Predict</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

@@ -6,76 +6,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thyroid Prediction</title>
   <style>
-      body {
-      font-family: Arial, sans-serif;
-      background-color: rgba(0, 0, 0, 0.774);
-    }
+    body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(0, 0, 0, 0.774);
+  }
 
-    h1 {
-      text-align: center;
-      margin-top: 20px;
-    }
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+  }
 
-    form {
-      max-width: 40%;
-      margin: 0 auto;
-      margin-top: 5%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      background-color: #f7f7f7;
-      border-radius: 10px;
-    }
+  form {
+    max-width: 40%;
+    margin: 0 auto;
+    margin-top: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+  }
 
-    table {
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
+  table {
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
 
-    td {
-      padding: 10px;
-    }
+  td {
+    padding: 10px;
+  }
 
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
 
-    input[type="number"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
+  input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
 
-    #submit {
-      background-color: #4CAF50;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
 
-    #submit {
-      background-color: #3e8e41;
-    }
+  #submit {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
 
-    #error {
-      color: red;
-      font-weight: bold;
-      font-size: large;
-    }
+  #submit {
+    background-color: #3e8e41;
+  }
+
+  #error {
+    color: red;
+    font-weight: bold;
+    font-size: large;
+  }
   </style>
 </head>
 <body>
   <form action="http://localhost:5000/thyroid/submit" method="post">
     <table>
-    <h1>Thyroid Prediction</h1>
+      <tr>
+        <th colspan="2">
+          <h1>Thyroid Prediction</h1>
+        </th>
+
+      </tr>
       <tr>
         <td>
           <label>Age</label>

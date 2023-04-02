@@ -15,6 +15,10 @@ def load_thyroid_page():
 def load_heart_page():
     return render_template("website/heartdisease.html")
 
+@webapp.route("/lungcancer")
+def load_lung_page():
+    return render_template("website/lungcancer.html")
+
 @webapp.post("/diabetese/submit")
 def submit_diabetese_data():
     glucose = request.form.get("glucose",None,type=int)
@@ -76,11 +80,11 @@ def submit_thyroid_data():
     T4U = request.form.get("T4U",None,type=float)
     FTI = request.form.get("FTI",None,type=float)
     gender=request.form.get("gender",None,type=str)
-    Sick_t=request.form.get("Sick_t",None,type=bool)
-    Pregnant_t=request.form.get("Pregnant_t",None,type=bool)
-    Thyroid_Surgery_t=request.form.get("Thyroid_Surgery_t",None,type=bool)
-    Goitre_t=request.form.get("Goitre_t",None,type=bool)
-    Tumor_t=request.form.get("Tumor_t",None,type=bool)
+    Sick_t=request.form.get("Sick_t",None,type=str) == 'true'
+    Pregnant_t=request.form.get("Pregnant_t",None,type=str) == 'true'
+    Thyroid_Surgery_t=request.form.get("Thyroid_Surgery_t",None,type=str) == 'true'
+    Goitre_t=request.form.get("Goitre_t",None,type=str) == 'true'
+    Tumor_t=request.form.get("Tumor_t",None,type=str) == 'true'
     data = {
         "Age":Age,
         "T3":T3,
@@ -130,7 +134,7 @@ def submit_heart_data():
     fbs = request.form.get("fbs",None,type=bool)
     restecg = request.form.get("restecg",None,type=int)
     thalach = request.form.get("thalach",None,type=int)
-    exang = request.form.get("exang",None,type=bool)
+    exang = request.form.get("exang",None,type=str) == 'true'
     oldpeak = request.form.get("oldpeak",None,type=float)
     slope = request.form.get("slope",None,type=int)
     ca = request.form.get("ca",None,type=int)
@@ -174,5 +178,74 @@ def submit_heart_data():
         item = "<li>" + prev + "</li>"
         prevelements+=item
     
+    return render_template("website/results/result.html",result=result,title=title,preventions=prevelements),200
+
+
+@webapp.post("/lungcancer/submit")
+def submit_lungcancer_data():
+
+    gender = request.form.get("gender",None,type=str)
+    age = request.form.get("age",None,type=int)
+    smoking = request.form.get("smoking",None,type=str) == 'true'
+    yellow_fingers = request.form.get("yellow_fingers",None,type=str) == 'true'
+    anxiety = request.form.get("anxiety",None,type=str) == 'true'
+    peer_pressure = request.form.get("peer_pressure",None,type=str) == 'true'
+    chronic_disease = request.form.get("chronic_disease",None,type=str) == 'true'
+    fatigue = request.form.get("fatigue",None,type=str) == 'true'
+    allergy = request.form.get("allergy",None,type=str) == 'true'
+    wheezing = request.form.get("wheezing",None,type=str) == 'true'
+    alcohol = request.form.get("alcohol",None,type=str) == 'true'
+    cough = request.form.get("cough",None,type=str) == 'true'
+    shortness_of_breath = request.form.get("shortness_of_breath",None,type=str) == 'true'
+    swallowing_difficulty = request.form.get("swallowing_difficulty",None,type=str) == 'true'
+    chest_pain = request.form.get("chest_pain",None,type=str) == 'true'
+
+
+    data = {
+        "gender":gender,
+        "age":age,
+        "smoking":smoking,
+        "yellow_fingers":yellow_fingers,
+        "anxity":anxiety,
+        "peer_pressure":peer_pressure,
+        "chronic_disease":chronic_disease,
+        "fatigue":fatigue,
+        "allergy":allergy,
+        "wheezing":wheezing,
+        "alcohol":alcohol,
+        "cough":cough,
+        "shortness_of_breath":shortness_of_breath,
+        "swallowing_difficulty":swallowing_difficulty,
+        "chest_pain":chest_pain
+    }
+
+    resp = requests.put("http://localhost:5000/predict/lungcancer",json=data)
+    if resp.status_code>=400 and resp.status_code<=500:
+        det_msg=""
+        if resp.status_code == 500:
+            det_msg="Server down try again later"
+        if resp.status_code == 404:
+            det_msg="Page not found"
+        elif resp.status_code>=400 and resp.status_code<500:
+            det_msg = "Please make sure you filled all fields with correct data"
+        json = resp.json()
+        err = json["error"]
+        err = err.upper()
+        return render_template("website/errors/error.html",response=resp.status_code,msg=err,det_msg=det_msg)
+    
+    res = resp.json()
+
+    result = res['result']
+
+    title = "Lung Cancer Prediction Result"
+
+    preventions = res['prevention methods']
+
+    prevelements = ''''''
+
+    for prev in preventions:
+        item = "<li>" + prev + "</li>"
+        prevelements+=item
+
     return render_template("website/results/result.html",result=result,title=title,preventions=prevelements),200
 
