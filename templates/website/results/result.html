@@ -46,6 +46,16 @@
             color: #2d3135;
             font-size: 16px;
         }
+
+        #home {
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+        background-color: #2d3135;
+        }
 </style>
 </head>
 <body>
@@ -64,6 +74,13 @@
             </td>
         </tr>
         {{add_info | safe}}
+        <tr>
+            <td>
+                <a href="http://localhost:5000">
+                    <button id="home">Go Home</button>
+                </a>
+            </td>
+        </tr>
     </table>
 </body>
 </html>
