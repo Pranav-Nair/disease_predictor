@@ -83,9 +83,9 @@ def predict_heartissue():
         return jsonify({"error":"invalid values","non zero fields":["age","restbps","thalach","chol"], \
             "non negative fields":["cp","restecg","oldpeak","slope","ca","thal"]}),400
     
-    if gender not in ["male","fename"]:
+    if gender not in ["male","female"]:
         return jsonify({"error":"gener can only be [male,female]"}),400
-    
+        
     if gender == "male":
         gender = 1
     else:
